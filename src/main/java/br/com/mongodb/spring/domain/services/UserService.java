@@ -21,7 +21,7 @@ public class UserService {
 		return repo.findAll();
 	}
 	
-	public User findById(String id) {
+	public User find(String id) {
 		
 		Optional<User> user = repo.findById(id);
 		return user.orElseThrow(() -> new ObjectNotFoundException(
@@ -32,11 +32,22 @@ public class UserService {
 		return repo.insert(user);
 	}
 	
+	public User update(User user) {
+		User newUser = find(user.getId());
+		updateData(newUser, user);
+		return repo.save(newUser);
+	}
+	
 	public void delete(String id) {
-		findById(id);
+		find(id);
 		repo.deleteById(id);
 	}
 	
+	private void updateData(User newUser, User user) {
+		newUser.setName(user.getName());
+		newUser.setEmail(user.getEmail());
+	}
+
 	public User fromDto(UserDto userDto) {
 		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}	
