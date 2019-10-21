@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.mongodb.spring.domain.User;
 import br.com.mongodb.spring.domain.services.UserService;
-import br.com.mongodb.spring.dto.UserDto;
+import br.com.mongodb.spring.dto.UserDTO;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -25,24 +25,24 @@ public class UserResource {
 	private UserService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<UserDto>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		
 		List<User> list = service.findAll();
-		List<UserDto> listDto = list.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<UserDto> findById(@PathVariable String id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		
 		User user = service.find(id);
 		
-		return ResponseEntity.ok().body(new UserDto(user));
+		return ResponseEntity.ok().body(new UserDTO(user));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody UserDto userDto) {
+	public ResponseEntity<Void> insert(@RequestBody UserDTO userDto) {
 		
 		User user = service.fromDto(userDto);
 		user = service.insert(user);
@@ -53,7 +53,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UserDto userDto) {
+	public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UserDTO userDto) {
 		
 		User user = service.fromDto(userDto);
 		user.setId(id);

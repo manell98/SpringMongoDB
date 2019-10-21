@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.mongodb.spring.domain.User;
 import br.com.mongodb.spring.domain.services.exception.ObjectNotFoundException;
-import br.com.mongodb.spring.dto.UserDto;
+import br.com.mongodb.spring.dto.UserDTO;
 import br.com.mongodb.spring.repositories.UserRepository;
 
 @Service
@@ -48,7 +48,7 @@ public class UserService {
 		newUser.setEmail(user.getEmail());
 	}
 
-	public User fromDto(UserDto userDto) {
+	public User fromDto(UserDTO userDto) {
 		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}	
 }
