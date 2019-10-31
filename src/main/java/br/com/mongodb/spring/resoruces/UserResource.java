@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.mongodb.spring.domain.Post;
 import br.com.mongodb.spring.domain.User;
 import br.com.mongodb.spring.domain.services.UserService;
 import br.com.mongodb.spring.dto.UserDTO;
@@ -66,6 +67,14 @@ public class UserResource {
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		
+		User user = service.find(id);
+		
+		return ResponseEntity.ok().body(user.getPosts());
 	}
 	
 }
